@@ -1,0 +1,5 @@
+.idea
+application/views/page/app_final.php
+application/views/page/app_skeleton.php
+application/classes/Controller/api_final.php
+application/classes/Controller/api_skeleton.php

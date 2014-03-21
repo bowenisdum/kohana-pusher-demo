@@ -1,0 +1,56 @@
+html,
+body {
+	height: 100%;
+	padding: 20px 0px;
+	margin: 0;
+	overflow: hidden;
+}
+.row,
+.col-md-8,
+.col-md-4 {
+	height: 100%;
+}
+.container {
+	position: relative;
+	height: 100%;
+	h2 {
+		margin-top: 0px;
+	}
+	.window {
+		height: 100%;
+		margin: auto;
+		background-color: #efefef;
+		padding: 20px 50px;
+	}
+	#login {
+		width: 400px;
+	}
+	#chatroom {
+		width: 100%;
+		position: absolute;
+		top: 0px;
+		#msg-list {
+			display: block;
+			height: calc(~"100% - 85px");
+			padding: 10px;
+			list-style: none;
+			overflow-y: scroll;
+			overflow-x: hidden;
+			background-color: white;
+			box-shadow: inset 0px 0px 10px -3px gray;
+			.msg-user {
+				font-weight: bold;
+			}
+		}
+		#user-list {
+
+		}
+		#input-msg {
+			width: 80%;
+		}
+		#btn-submit-msg {
+			width: 19%;
+			float: right;
+		}
+	}
+}

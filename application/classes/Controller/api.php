@@ -30,7 +30,14 @@ class Controller_Api extends Controller_Template
 
 		// placeholder for code
 
-		$this->template->data = array();
+		$pusher = Pushko::factory('default');
+		$socket_id = $this->request->post('socket_id');
+		$channel_name = $this->request->post('channel_name');
+		$user_data = Session::instance()->get('user');
+
+		$auth_result = $pusher->presence_auth($channel_name, $socket_id, $user_data['id'], $user_data);
+
+		$this->template->data = $auth_result;
 	}
 
 	/**
@@ -41,6 +48,8 @@ class Controller_Api extends Controller_Template
 		$this->response->headers('Content-Type','application/json');
 
 		// placeholder for code
+		$pusher = Pushko::factory('default');
+		$pusher->trigger('presence-chat-room', 'new-msg', $this->request->post());
 
 		$this->template->data = array();
 	}

@@ -94,7 +94,9 @@
 			/**
 			 * server side firing of events
 			 */
-			// $.post('/api/send_msg', msg);
+			$.post('/api/send_msg', msg);
+
+			channel.trigg
 
 			/**
 			 * client side firing of events
@@ -120,11 +122,24 @@
 		 *
 		 * initialization of connection, appkey, 403 or 200
 		 */
+		pusher = new Pusher('2a2b6caa913795ddd9ad', {
+			authEndpoint: '/api/pusher_auth'
+		});
 
 		/**
 		 * client->pusher->auth->pusher->client
 		 */
+		channel = pusher.subscribe('presence-chat-room');
 
+		/**
+		 * upon successfully joinning the pusher channel
+		 */
+		channel.bind('pusher:subscription_succeeded', function(members) {
+			members.each(function(member) {
+				// for example:
+				add_member(member.id, member.info);
+			});
+		});
 		/**
 		 * upon successfully joinning the pusher channel
 		 */
@@ -132,14 +147,22 @@
 		/**
 		 * when new member joins the channel
 		 */
+		channel.bind('pusher:member_added', function(member){
+			add_member(member.id, member.info);
+		});
 
 		/**
 		 * when existing member leaves the channel
 		 */
-
+		channel.bind('pusher:member_removed', function(member){
+			remove_member(member.id, member.info);
+		});
 		/**
 		 * when new message notification is receieved from server event
 		 */
+		channel.bind('new-msg', function(msg){
+			add_msg(msg);
+		});
 
 		/**
 		 * when new message notification is receieved from client event
